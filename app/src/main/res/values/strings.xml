@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">Lab1</string>
+    <string name="button">Добавить плейлист</string>
+    <string name="cover">Обложка</string>
+    <string name="text">Текст</string>
+    <string name="playlist_name_hint">Название</string>
+    <string name="button_save">Сохранить</string>
+    <string name="title_activity_create_play_list">Создать плейлист</string>
+</resources>
