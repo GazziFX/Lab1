@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,6 +17,11 @@ public class MainActivity extends AppCompatActivity {
     private Button button;
     private LinearLayout songList;
 
+    private static SharedPreferences getPreferences()
+    {
+        return Application.getContext().getSharedPreferences("mySharedPrefs", Context.MODE_PRIVATE);
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -23,6 +29,9 @@ public class MainActivity extends AppCompatActivity {
         songList = findViewById(R.id.song_list);
         button = findViewById(R.id.button);
         restoreAlbums(SharedPreferencesHelper.getPlayListNames());
+
+        SharedPreferences pref = getPreferences();
+        pref.edit().putString("qq", "привет").putFloat("float", 1.f).apply();
     }
 
     @Override
@@ -36,6 +45,10 @@ public class MainActivity extends AppCompatActivity {
                 startActivityForResult(startCreatePlayListIntent, REQUEST_CODE);
             }
         });
+
+        SharedPreferences pref = getPreferences();
+        String qq = pref.getString("qq", null);
+        float _float = pref.getFloat("float", 0f);
     }
 
     @Override
