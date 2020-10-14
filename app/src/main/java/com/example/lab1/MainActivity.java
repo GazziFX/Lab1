@@ -17,11 +17,6 @@ public class MainActivity extends AppCompatActivity {
     private Button button;
     private LinearLayout songList;
 
-    private static SharedPreferences getPreferences()
-    {
-        return Application.getContext().getSharedPreferences("mySharedPrefs", Context.MODE_PRIVATE);
-    }
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -30,7 +25,7 @@ public class MainActivity extends AppCompatActivity {
         button = findViewById(R.id.button);
         restoreAlbums(SharedPreferencesHelper.getPlayListNames());
 
-        SharedPreferences pref = getPreferences();
+        SharedPreferences pref = getSharedPreferences("mySharedPrefs", Context.MODE_PRIVATE);
         pref.edit().putString("qq", "привет").putFloat("float", 1.f).apply();
     }
 
@@ -46,7 +41,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        SharedPreferences pref = getPreferences();
+        SharedPreferences pref = getSharedPreferences("mySharedPrefs", Context.MODE_PRIVATE);
         String qq = pref.getString("qq", null);
         float _float = pref.getFloat("float", 0f);
     }
