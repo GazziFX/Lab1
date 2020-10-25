@@ -1,11 +1,11 @@
 package com.example.lab1;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.*;
 
@@ -14,15 +14,20 @@ import java.util.List;
 public class MainActivity extends AppCompatActivity {
     public static final int REQUEST_CODE = 100;
     private Button button;
-    private LinearLayout songList;
+    private RecyclerView songList;
+    private PlaylistAdapter adapter = new PlaylistAdapter();
+    private SwipeHelper swipeHelper;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         songList = findViewById(R.id.song_list);
+        songList.setLayoutManager(new LinearLayoutManager(this));
+        songList.setAdapter(adapter);
+        swipeHelper = new SwipeHelper(songList);
+        adapter.restore();
         button = findViewById(R.id.button);
-        restoreAlbums(SharedPreferencesHelper.getPlayListNames());
     }
 
     @Override
@@ -36,19 +41,39 @@ public class MainActivity extends AppCompatActivity {
                 startActivityForResult(startCreatePlayListIntent, REQUEST_CODE);
             }
         });
+        swipeHelper.setListener(new SwipeHelper.SwipeCallback() {
+            @Override
+            public void onSwipe(int adapterPosition) {
+                adapter.remove(adapterPosition);
+            }
+        });
+        adapter.setListener(new OnItemClickListener() {
+            @Override
+            public void onItemClick(int position) {
+                PlaylistItem item = adapter.getItem(position);
+                Intent startCreatePlayListIntent =
+                        new Intent(MainActivity.this, EditPlayListActivity.class);
+                startCreatePlayListIntent.putExtra("PLAYLIST_ID", item.getId());
+                startCreatePlayListIntent.putExtra("PLAYLIST_NAME", item.getName());
+                startActivityForResult(startCreatePlayListIntent, REQUEST_CODE);
+                Toast.makeText(MainActivity.this, item.toString(), Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
     @Override
     protected void onPause() {
         super.onPause();
         button.setOnClickListener(null);
+        adapter.setListener(null);
+        swipeHelper.setListener(null);
     }
 
     private void processIntent(Intent intent) {
         String playlist_name = intent.getStringExtra("PLAYLIST_NAME");
+        int id = intent.getIntExtra("PLAYLIST_ID", -1);
         if (playlist_name != null && playlist_name.length() > 0) {
-            addNewAlbum(playlist_name);
-            SharedPreferencesHelper.save(playlist_name);
+            adapter.updateItem(id, playlist_name);
         }
     }
 
@@ -59,22 +84,6 @@ public class MainActivity extends AppCompatActivity {
             return;
         }
         processIntent(data);
-    }
-
-    private void addNewAlbum(String title) {
-        LayoutInflater layoutInflater =
-                (LayoutInflater) MainActivity
-                        .this
-                        .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        View item = layoutInflater.inflate(R.layout.play_list_item, null);
-        TextView playlistName = item.findViewById(R.id.play_list_name_value);
-        playlistName.setText(title);
-        songList.addView(item);
-    }
-
-    private void restoreAlbums(List<String> albums) {
-        for (String album : albums) {
-            addNewAlbum(album);
-        }
+        songList.scrollToPosition(adapter.getItemCount() - 1);
     }
 }
