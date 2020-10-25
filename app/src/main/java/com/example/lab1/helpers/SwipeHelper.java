@@ -1,4 +1,4 @@
-package com.example.lab1;
+package com.example.lab1.helpers;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.ItemTouchHelper;

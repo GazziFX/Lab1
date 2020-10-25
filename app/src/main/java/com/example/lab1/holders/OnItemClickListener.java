@@ -1,4 +1,4 @@
-package com.example.lab1;
+package com.example.lab1.holders;
 
 public interface OnItemClickListener {
     /**

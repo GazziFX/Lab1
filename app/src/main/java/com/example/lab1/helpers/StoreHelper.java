@@ -1,7 +1,11 @@
-package com.example.lab1;
+package com.example.lab1.helpers;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+
+import com.example.lab1.Application;
+import com.example.lab1.entity.PlaylistItem;
+
 import java.util.ArrayList;
 import java.util.List;
 /**

@@ -1,4 +1,4 @@
-package com.example.lab1;
+package com.example.lab1.activity;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -9,7 +9,11 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.*;
 
-import java.util.List;
+import com.example.lab1.R;
+import com.example.lab1.adapters.PlaylistAdapter;
+import com.example.lab1.entity.PlaylistItem;
+import com.example.lab1.helpers.SwipeHelper;
+import com.example.lab1.holders.OnItemClickListener;
 
 public class MainActivity extends AppCompatActivity {
     public static final int REQUEST_CODE = 100;

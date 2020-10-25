@@ -1,14 +1,16 @@
-package com.example.lab1;
+package com.example.lab1.adapters;
 
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.example.lab1.holders.OnItemClickListener;
 import com.example.lab1.R;
-import com.example.lab1.StoreHelper;
-import com.example.lab1.PlaylistItem;
-import com.example.lab1.OnItemClickListener;
-import com.example.lab1.PlaylistHolder;
+import com.example.lab1.entity.PlaylistItem;
+import com.example.lab1.helpers.StoreHelper;
+import com.example.lab1.holders.PlaylistHolder;
+
 import java.util.ArrayList;
 import java.util.List;
 /**

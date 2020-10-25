@@ -1,11 +1,12 @@
-package com.example.lab1;
+package com.example.lab1.holders;
 
 import android.view.View;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
-import com.example.lab1.R; //Внимание тут R будет из вашего корневого пакета!!!
-import com.example.lab1.PlaylistItem;
+
+import com.example.lab1.R;
+import com.example.lab1.entity.PlaylistItem;
 
 public class PlaylistHolder extends RecyclerView.ViewHolder {
     private TextView playlistName;
